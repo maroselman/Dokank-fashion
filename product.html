@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product | DOKKANK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 40px;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #222;
+      text-decoration: none;
+    }
+
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .navbar-menu li a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    .navbar-menu .sale-link {
+      color: #e53935;
+      font-weight: 700;
+    }
+
+    .cart-icon {
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #222;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #e53935;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    .product-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+      padding: 0 20px;
+    }
+
+    .product-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-image img {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      display: block;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px #0001;
+      object-fit: cover;
+    }
+
+    .product-details {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-details h2 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+    }
+
+    .product-details .price {
+      color: #e53935;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .sizes {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .size-box {
+      border: 1px solid #ccc;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      user-select: none;
+    }
+
+    .size-box:hover {
+      border-color: #000;
+    }
+
+    .size-box.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+
+    .add-to-cart {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .add-to-cart:hover {
+      background: #e53935;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <li><a href="index.html">Home</a></li>
+      <a class="navbar-brand" href="index.html">DOKKANK</a>
+      <ul class="navbar-menu">
+        <li><a href="men.html">Men</a></li>
+        <li><a href="women.html">Women</a></li>
+        <li><a href="kids.html">Kids</a></li>
+        <li><a href="sale.html" class="sale-link">Sale</a></li>
+        <li>
+          <a href="cart.html" class="cart-icon">🛒
+            <span class="cart-count" id="cartCount">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Product Section -->
+  <div class="product-container" id="productContainer">
+    <div class="product-image">
+      <img id="productImage" src="" alt="">
+    </div>
+    <div class="product-details">
+      <h2 id="productName"></h2>
+      <div class="price" id="productPrice"></div>
+
+      <div class="sizes" id="sizeOptions"></div>
+
+      <button class="add-to-cart" id="addToCartBtn">Add to Cart</button>
+    </div>
+  </div>
+
+  <script>
+    // تحميل المنتج من localStorage
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    if (!product) {
+      document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px;'>No product found</h2>";
+    } else {
+      // تعديل هنا عشان الصورة تكون من المنتج اللي اتضغط عليه
+      document.getElementById("productImage").src = product.img;
+      document.getElementById("productName").innerText = product.name;
+      document.getElementById("productPrice").innerText = `$${product.price}.00`;
+    }
+
+    // عرض المقاسات
+    const sizes = ["S", "M", "L", "XL", "XXL"];
+    const sizeContainer = document.getElementById("sizeOptions");
+    let selectedSize = null;
+
+    sizes.forEach(size => {
+      const box = document.createElement("div");
+      box.className = "size-box";
+      box.innerText = size;
+      box.onclick = () => {
+        document.querySelectorAll(".size-box").forEach(b => b.classList.remove("active"));
+        box.classList.add("active");
+        selectedSize = size;
+      };
+      sizeContainer.appendChild(box);
+    });
+
+    // تحديث عداد الكارت
+    function updateCartCount() {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      document.getElementById("cartCount").innerText = cartItems.length;
+    }
+
+    // إضافة المنتج إلى العربة
+    document.getElementById("addToCartBtn").onclick = () => {
+      if (!selectedSize) {
+        alert("Please select a size before adding to cart.");
+        return;
+      }
+
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const productToAdd = { ...product, size: selectedSize };
+      cartItems.push(productToAdd);
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+      updateCartCount();
+      alert(`Added ${product.name} (Size: ${selectedSize}) to cart 🛒`);
+    };
+
+    updateCartCount();
+  </script>
+</body>
+</html>

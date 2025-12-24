@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOKKANK | Hot Deals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {margin:0;font-family:'Montserrat',Arial,sans-serif;background:#fff;color:#222;}
+    a{text-decoration:none;color:inherit;}
+       .navbar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 40px;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #222;
+      text-decoration: none;
+    }
+
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar-menu li a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    .navbar-menu .sale-link {
+      color: #e53935;
+      font-weight: 700;
+    }
+    #cart-count{position:absolute;top:-8px;right:-10px;background:#e53935;color:#fff;font-size:0.7rem;padding:2px 6px;border-radius:50%;}
+    .section-title{font-size:1.7rem;font-weight:700;margin:30px 0 20px 45px;letter-spacing:2px;color:#222;}
+    .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;padding:0 38px;max-width:1400px;margin:auto 0 60px 0;}
+    .product-card{background:#fafafa;border:1px solid #eee;border-radius:12px;position:relative;text-align:center;box-shadow:0 4px 20px #0001;padding:22px 8px 20px 8px;display:flex;flex-direction:column;align-items:center;transition:box-shadow 0.2s,transform 0.2s;min-height:370px;cursor:pointer;}
+    .product-card:hover{box-shadow:0 8px 32px #0002;transform:translateY(-6px) scale(1.03);}
+    .sale-badge{position:absolute;top:15px;left:15px;background:#222;color:#fff;font-weight:600;padding:5px 12px;border-radius:14px;font-size:0.94rem;letter-spacing:1px;z-index:2;box-shadow:0 2px 8px #0003;pointer-events:none;}
+    .product-img-box{position:relative;width:180px;height:180px;margin-bottom:14px;cursor:pointer;}
+    .product-img-main,.product-img-hover{width:100%;height:100%;object-fit:cover;border-radius:7px;position:absolute;left:0;top:0;transition:opacity 0.3s;background:#fff;}
+    .product-img-hover{opacity:0;pointer-events:none;}
+    .product-card:hover .product-img-main{opacity:0;}
+    .product-card:hover .product-img-hover{opacity:1;pointer-events:auto;}
+    .product-name{font-weight:500;font-size:1.09rem;margin:13px 0 6px 0;letter-spacing:1px;color:#222;cursor:pointer;}
+    .product-price{font-size:1.08rem;margin-bottom:13px;}
+    .old-price{text-decoration:line-through;color:#888;font-size:0.98rem;margin-right:5px;}
+    .new-price{color:#e53935;font-weight:bold;font-size:1.05rem;}
+    .add-cart-btn{opacity:0;pointer-events:none;margin-top:7px;background:#222;color:#fff;padding:8px 0;border-radius:7px;border:none;font-weight:600;font-size:1.07rem;width:90%;cursor:pointer;transition:background 0.2s,opacity 0.2s;}
+    .product-card:hover .add-cart-btn{opacity:1;pointer-events:auto;}
+    .add-cart-btn:hover{background:#e53935;}
+    @media (max-width:1200px){.products-grid{grid-template-columns:repeat(2,1fr);}}
+    @media (max-width:700px){.products-grid{grid-template-columns:1fr;}.product-img-box{width:120px;height:120px;}.product-card{min-height:220px;}.section-title{margin-left:10px;}}
+    .banner{width:100%;height:180px;background:#e53935;color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;margin-bottom:30px;}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a class="navbar-brand" href="index.html">DOKKANK</a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="men.html" style="font-weight:bold;">Men</a></li>
+        <li><a href="women.html">Women</a></li>
+        <li><a href="kids.html">Kids</a></li>
+        <li><a href="sale.html" class="sale-link">Sale</a></li>
+        <li><a href="cart.html">🛒 Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <h2 class="section-title">Hot Deals</h2>
+  <div class="products-grid">
+    <div class="product-card">
+      <span class="sale-badge">-20%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/signature-black-tee.jpg" alt="Black T-shirt">
+        <img class="product-img-hover" src="./image/men/t-shirt/OSLTB-4635.jpg" alt="T-shirt on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Signature Black T-Shirt</div>
+      <div class="product-price"><span class="old-price">$50.00</span><span class="new-price">$40.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Signature Black T-Shirt',40)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-30%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/images-hoodie.jpeg" alt="Gray Hoodie">
+        <img class="product-img-hover" src="./image/men/t-shirt/grayhoodie.jpg" alt="Hoodie on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Cozy Gray Hoodie</div>
+      <div class="product-price"><span class="old-price">$70.00</span><span class="new-price">$49.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Cozy Gray Hoodie',49)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-25%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/jeans.jpg" alt="Blue Jeans">
+        <img class="product-img-hover" src="./image/men/t-shirt/girljeans.jpg" alt="Jeans on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Classic Blue Jeans</div>
+      <div class="product-price"><span class="old-price">$60.00</span><span class="new-price">$45.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Classic Blue Jeans',45)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-15%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/shoes.jpg" alt="White Sneakers">
+        <img class="product-img-hover" src="./image/men/t-shirt/shoes2.jpg" alt="Sneakers on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">White Sneakers</div>
+      <div class="product-price"><span class="old-price">$80.00</span><span class="new-price">$68.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'White Sneakers',68)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-10%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/girljacket.jpg" alt="Black Jacket">
+        <img class="product-img-hover" src="./image/men/t-shirt/manjacket.jpg" alt="Jacket on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Black Leather Jacket</div>
+      <div class="product-price"><span class="old-price">$120.00</span><span class="new-price">$108.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Black Leather Jacket',108)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-20%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/sport.jpg" alt="Red T-shirt">
+        <img class="product-img-hover" src="./image/men/t-shirt/sport2.jpg" alt="T-shirt on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Red Sport T-Shirt</div>
+      <div class="product-price"><span class="old-price">$45.00</span><span class="new-price">$36.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Red Sport T-Shirt',36)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-25%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/short1.jpeg" alt="Blue Shorts">
+        <img class="product-img-hover" src="./image/men/t-shirt/short2.jpeg" alt="Shorts on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Blue Casual Shorts</div>
+      <div class="product-price"><span class="old-price">$40.00</span><span class="new-price">$30.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Blue Casual Shorts',30)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-15%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/hoodieboy.jpg" alt="Black Hoodie">
+        <img class="product-img-hover" src="./image/men/t-shirt/hoodiegirl.jpg" alt="Hoodie on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Black Hoodie</div>
+      <div class="product-price"><span class="old-price">$70.00</span><span class="new-price">$59.50</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Black Hoodie',59.5)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-30%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/black shoes1.jpeg" alt="Black Sneakers">
+        <img class="product-img-hover" src="./image/men/t-shirt/black shoes2.jpeg" alt="Sneakers on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Black Sneakers</div>
+      <div class="product-price"><span class="old-price">$90.00</span><span class="new-price">$63.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Black Sneakers',63)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <span class="sale-badge">-20%</span>
+      <div class="product-img-box" onclick="window.location='product.html'">
+        <img class="product-img-main" src="./image/men/t-shirt/Gray Bomber Jacket boy.jpeg" alt="Gray Jacket">
+        <img class="product-img-hover" src="./image/men/t-shirt/Gray Bomber Jacketgirl.jpg" alt="Jacket on model">
+      </div>
+      <div class="product-name" onclick="window.location='product.html'">Gray Bomber Jacket</div>
+      <div class="product-price"><span class="old-price">$100.00</span><span class="new-price">$80.00</span></div>
+      <button class="add-cart-btn" onclick="addToCart(this,'Gray Bomber Jacket',80)">Add to Cart</button>
+    </div>
+  </div>
+
+<script>
+function addToCart(btn, name, price){
+  let cart = JSON.parse(localStorage.getItem("dokkankCart"))||[];
+  cart.push({name,price});
+  localStorage.setItem("dokkankCart",JSON.stringify(cart));
+  btn.textContent="Added!";
+  setTimeout(()=>{btn.textContent="Add to Cart";},1200);
+  let cartCount = document.getElementById("cart-count");
+  if(cartCount) cartCount.textContent=cart.length;
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  let cart = JSON.parse(localStorage.getItem("dokkankCart"))||[];
+  let cartCount=document.getElementById("cart-count");
+  if(cartCount) cartCount.textContent=cart.length;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOKKANK | Fashion Brand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a class="navbar-brand" href="index.html">DOKKANK</a>
+      <ul class="navbar-menu">
+        <li><a href="men.html">Men</a></li>
+        <li><a href="women.html">Women</a></li>
+        <li><a href="kids.html">Kids</a></li>
+        <li><a href="sale.html" class="sale-link">Sale</a></li>
+      </ul>
+      <div class="nav-icons">
+        <input type="search" placeholder="Search products" class="search-box">
+        <span class="nav-icon" title="Login" onclick="showLoginSidebar()">&#128100;</span>
+        <span class="nav-icon" title="Wishlist">&#9825;</span>
+        <span class="nav-icon" title="Cart" onclick="location.href='cart.html'">
+  &#128722;<span id="cart-count">0</span>
+</span>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section: Video + Title + Buttons -->
+  <section class="hero-banner">
+    <video autoplay muted loop id="bg-video">
+      <source src="./video/8311915-uhd_2160_4096_25fps.mp4" type="video/mp4">
+      <!-- Put your own video path -->
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">New Season Arrivals</h1>
+      <p class="hero-desc">
+        Discover the latest trends in fashion. Shop our new collection and elevate your style.
+      </p>
+      <div class="hero-buttons">
+        <a href="#shop" class="hero-btn primary">Shop Now <span style="margin-left:8px;">→</span></a>
+        <a href="sale.html" class="hero-btn secondary">View Sale</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="main-categories">
+    <div class="big-card" onclick="location.href='men.html'">
+      <img src="./image/WhatsApp Image 2025-10-18 at 23.18.27_faad0258.jpg" alt="Men">
+      <div class="card-title">Men</div>
+    </div>
+    <div class="big-card" onclick="location.href='women.html'">
+      <img src="./image/WhatsApp Image 2025-10-18 at 23.18.29_fa70e72c.jpg" alt="Women">
+      <div class="card-title">Women</div>
+    </div>
+    <div class="big-card" onclick="location.href='kids.html'">
+      <img src="./image/WhatsApp Image 2025-10-18 at 23.18.29_0cf71672.jpg" alt="Kids">
+      <div class="card-title">Kids</div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="about">
+    <h2>About Us</h2>
+    <p>DOKKANK is a leading fashion brand offering trendy clothing for men, women, and kids with top quality and unique designs.</p>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="contact-us">
+    <div class="contact-right">
+      <h3>Contact Us</h3>
+      <p>Email: <a href="mailto:dokkank2026@gmail.com">dokkank2026@gmail.com</a></p>
+      <p>Phone: 01210527217</p>
+    </div>
+    <div class="contact-left">
+      <!-- Google Maps Embed: تفاعلية بالكامل -->
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.441660181197!2d31.235711315439988!3d30.020606981894985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145841354c9bde83%3A0x1a3be5e3d5a6b1b8!2sCairo%2C%20Egypt!5e0!3m2!1sen!2seg!4v1664387150884!5m2!1sen!2seg" 
+        width="100%" height="210" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- Login Sidebar -->
+  <div id="login-sidebar-bg" class="sidebar-bg" style="display:none;" onclick="closeLoginSidebar()"></div>
+  <div id="login-sidebar" class="login-sidebar" style="display:none;">
+    <span class="close-sidebar" onclick="closeLoginSidebar()">&times;</span>
+    <h2 class="sidebar-title">Login</h2>
+    <form>
+      <label class="sidebar-label">Email *</label>
+      <input type="email" placeholder="Email" required class="sidebar-input">
+      <label class="sidebar-label">Password *</label>
+      <input type="password" placeholder="Password" required class="sidebar-input">
+      <button type="submit" class="sidebar-btn">Login</button>
+      <div style="margin:16px 0;">or</div>
+     <button class="google-login-btn">
+  <img src="https://www.svgrepo.com/show/475656/google-color.svg">
+  Login with Google
+</button>
+
+      <div style="margin:18px 0 0 0; text-align:left;">
+        <span style="color:#555;">New customer? </span>
+        <a href="#" class="sidebar-link">Create your account</a><br>
+        <span style="color:#555;">Lost password? </span>
+        <a href="#" class="sidebar-link">Recover password</a>
+      </div>
+    </form>
+  </div>
+
+<script>
+  localStorage.removeItem("dokkankCart");
+
+document.addEventListener("DOMContentLoaded", () => {
+  // جلب الكارت من localStorage أو إنشاء مصفوفة فارغة
+  let cart = JSON.parse(localStorage.getItem("dokkankCart")) || [];
+  
+  // تحديث عداد الكارت عند التحميل
+  updateCartCount(cart);
+});
+
+// دالة لتحديث رقم الكارت على أيقونة الكارت
+function updateCartCount(cart) {
+  const countEl = document.getElementById("cart-count");
+
+  if (!cart || cart.length === 0) {
+    countEl.textContent = "";
+    countEl.style.display = "none";
+  } else {
+    countEl.textContent = cart.length;
+    countEl.style.display = "inline-block";
+  }
+}
+
+
+// دالة لإضافة منتج للكارت
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("dokkankCart")) || [];
+  cart.push(product);
+  localStorage.setItem("dokkankCart", JSON.stringify(cart));
+  
+  // تحديث الرقم على أيقونة الكارت مباشرة
+  updateCartCount(cart);
+}
+
+// دوال الـ Login Sidebar
+function showLoginSidebar() {
+  document.getElementById('login-sidebar-bg').style.display = 'block';
+  document.getElementById('login-sidebar').style.display = 'block';
+}
+
+function closeLoginSidebar() {
+  document.getElementById('login-sidebar-bg').style.display = 'none';
+  document.getElementById('login-sidebar').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

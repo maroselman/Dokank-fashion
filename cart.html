@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart | DOKKANK</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Montserrat', sans-serif; margin:0; padding:0; background:#fff; }
+  .cart-container { max-width:1000px; margin:40px auto; padding:0 20px; }
+  h2 { text-align:center; margin-bottom:30px; }
+  .cart-item { display:flex; align-items:center; gap:20px; background:#fafafa; padding:15px; border-radius:10px; box-shadow:0 2px 8px #0001; margin-bottom:20px; transition:0.3s; }
+  .cart-item:hover { transform:translateY(-5px); box-shadow:0 6px 20px #0002; }
+  .cart-item img { width:120px; height:120px; border-radius:10px; object-fit:cover; }
+  .cart-details { flex:1; }
+  .cart-details h3 { margin:0 0 5px; }
+  .cart-details .price { color:#e53935; font-weight:bold; }
+  .cart-details .size { font-size:0.9rem; color:#555; }
+  .remove-btn { background:none; border:1px solid #e53935; color:#e53935; padding:8px 16px; border-radius:8px; cursor:pointer; transition:0.3s; }
+  .remove-btn:hover { background:#e53935; color:#fff; transform:scale(1.05); }
+  .total { text-align:right; margin-top:30px; font-size:1.3rem; font-weight:600; }
+  .empty { text-align:center; font-size:1.2rem; color:#777; margin-top:80px; }
+  .checkout-btn { display:block; margin:30px auto; padding:14px 30px; background:#000; color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s; }
+  .checkout-btn:hover { background:#e53935; transform:scale(1.05); }
+  #paymentOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000; }
+  #paymentMethods { background:#fff; padding:30px; border-radius:12px; text-align:center; display:flex; gap:20px; flex-direction: column; min-width:200px; animation: fadeIn 0.3s ease; }
+  #paymentMethods button { padding:12px; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s; }
+  #paymentMethods button:hover { transform:scale(1.05); background:#e53935; color:#fff; }
+  @keyframes fadeIn { from {opacity:0; transform: translateY(-10px);} to {opacity:1; transform: translateY(0);} }
+</style>
+</head>
+<body>
+
+<div class="cart-container" id="cartContainer">
+  <h2>Your Shopping Cart 🛒</h2>
+  <div id="cartItems"></div>
+  <div class="total" id="cartTotal"></div>
+  <button class="checkout-btn" id="checkoutBtn">Confirm Payment</button>
+</div>
+
+<!-- Payment overlay -->
+<div id="paymentOverlay">
+  <div id="paymentMethods">
+    <h3>Select Payment Method</h3>
+    <button onclick="window.location.href='Cash.html'">Cash</button>
+    <button onclick="window.location.href='Card.html'">Visa</button>
+    <button style="background:#ccc;color:#000;" onclick="closePayment()">Cancel</button>
+  </div>
+</div>
+
+<script>
+  const cartItemsContainer = document.getElementById("cartItems");
+  const totalContainer = document.getElementById("cartTotal");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  const paymentOverlay = document.getElementById("paymentOverlay");
+
+  let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  function renderCart() {
+    cartItemsContainer.innerHTML = "";
+    if(cart.length === 0) {
+      cartItemsContainer.innerHTML = "<div class='empty'>Your cart is empty.</div>";
+      totalContainer.textContent = "";
+      checkoutBtn.style.display="none";
+      return;
+    }
+
+    let total = 0;
+    cart.forEach((item,index)=>{
+      const itemPrice = parseFloat(item.price.toString().replace(/[^0-9.]/g,""));
+      total += itemPrice;
+      const div = document.createElement("div");
+      div.className="cart-item";
+      div.innerHTML=`
+        <img src="${item.img}" alt="${item.name}">
+        <div class="cart-details">
+          <h3>${item.name}</h3>
+          <div class="price">$${itemPrice.toFixed(2)}</div>
+          <div class="size">Size: ${item.size}</div>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+      `;
+      cartItemsContainer.appendChild(div);
+    });
+
+    totalContainer.textContent = `Total: $${total.toFixed(2)}`;
+    checkoutBtn.style.display="block";
+  }
+
+  function removeItem(index){
+    cart.splice(index,1);
+    localStorage.setItem("cartItems",JSON.stringify(cart));
+    renderCart();
+  }
+
+  checkoutBtn.onclick = ()=> {
+    paymentOverlay.style.display = "flex";
+  }
+
+  function closePayment(){
+    paymentOverlay.style.display="none";
+  }
+
+  renderCart();
+</script>
+</body>
+</html>

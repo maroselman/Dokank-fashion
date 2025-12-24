@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Men | DOKKANK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 40px;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #222;
+      text-decoration: none;
+    }
+
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar-menu li a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    .navbar-menu .sale-link {
+      color: #e53935;
+      font-weight: 700;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 1.8rem;
+    }
+
+    .products-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      max-width: 1200px;
+      margin: 30px auto;
+    }
+
+    .product-card {
+      width: 240px;
+      background: #fafafa;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #0001;
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-img-box {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .product-img-main, .product-img-hover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .product-img-hover {
+      opacity: 0;
+    }
+
+    .product-card:hover .product-img-hover {
+      opacity: 1;
+    }
+
+    .product-name {
+      margin: 12px 0 6px 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .product-price {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 8px;
+    }
+
+    .new-price {
+      color: #e53935;
+      font-weight: bold;
+    }
+
+    .add-cart-btn {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-cart-btn:hover {
+      background: #e53935;
+    }
+  </style>
+</head>
+<body>
+
+   <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a class="navbar-brand" href="index.html">DOKKANK</a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="men.html" style="font-weight:bold;">Men</a></li>
+        <li><a href="women.html">Women</a></li>
+        <li><a href="kids.html">Kids</a></li>
+        <li><a href="sale.html" class="sale-link">Sale</a></li>
+        <li><a href="cart.html">🛒 Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Products -->
+  <h2>women's Collection</h2>
+  <div class="products-grid" id="menProducts"></div>
+
+  <script>
+    const products = [
+    {
+  name: "browen jakcet",
+  oldPrice: 40,
+  newPrice: 36,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 07.47.16_7fa61273.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 07.47.16_ccde88ba.jpg",
+  description: "Comfortable white basic cotton t-shirt with a clean classic design."
+},
+
+
+    {
+  name: "browen dress",
+  oldPrice: 40,
+  newPrice: 36,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.34_0cfd242d.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.34_651a42e4.jpg",
+  description: "Trendy Grazy shirt with unique design and premium cotton comfort."
+},
+
+
+   {
+  name: "red jacket",
+  oldPrice: 70,
+  newPrice: 60,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.36_bc61ed2b.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.36_8835411a.jpg",
+  description: "Slim fit t-shirt with modern design and soft breathable fabric."
+},
+
+
+    {
+  name: "Basic jacket",
+  oldPrice: 65,
+  newPrice: 55,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.37_0bdc93e5.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.37_2566ce53.jpg",
+  description: "Classic black hoodie with a modern streetwear vibe and soft cotton feel."
+},
+
+
+   {
+  name: "Boyfriend pants",
+  oldPrice: 50,
+  newPrice: 42,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.34_8b48956d.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.34_01979de6.jpg",
+  description: "Stylish blue jeans pants with a comfortable fit for everyday wear."
+},
+
+
+     {
+  name: "Gray Pants",
+  oldPrice: 45,
+  newPrice: 38,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.35_5bc4d5d7.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.35_3d363b64.jpg",
+  description: "Comfortable gray pants suitable for both casual and semi-formal looks."
+},
+
+
+     {
+  name: "Black Pants",
+  oldPrice: 60,
+  newPrice: 52,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.40_1e510760.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.40_57f52a20.jpg",
+  description: "Stylish black pants with a sleek and modern fit perfect for everyday wear."
+},
+
+
+    {
+  name: "Oversize Pants",
+  oldPrice: 45,
+  newPrice: 39,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.35_ab09ddd7.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.35_63108afe.jpg",
+  description: "Comfortable oversize pants designed for a relaxed and stylish streetwear look."
+},
+
+
+    {
+  name: "Gray shirt",
+  oldPrice: 45,
+  newPrice: 39,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.40_990862e5.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.41_38fc880f.jpg",
+  description: "Stylish bumb jacket offering warmth and a modern streetwear look."
+},
+
+     {
+  name: "basic shirt",
+  oldPrice: 45,
+  newPrice: 39,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.41_0d1f86cd.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.42_0e5a91c0.jpg",
+  description: "Classic black jacket with a sleek modern design, perfect for all seasons."
+},
+
+     {
+  name: "babyblue jacket",
+  oldPrice: 45,
+  newPrice: 39,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.39_0a71e142.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.39_32007746.jpg",
+  description: "Stylish Jamaliun jacket offering a modern look with premium comfort."
+},
+
+
+        {
+  name: "Off white jacket",
+  oldPrice: 45,
+  newPrice: 39,
+  imgMain: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.38_94ef90c4.jpg",
+  imgHover: "./image/men/t-shirt/WhatsApp Image 2025-10-27 at 14.53.39_bc9793a6.jpg",
+  description: "Stylish white jacket with a clean modern design and comfortable fit."
+},
+
+    ];
+
+
+    const container = document.getElementById("menProducts");
+
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <div class="product-img-box" onclick="goToProduct('${product.name}','${product.imgMain}','${product.newPrice}','${product.description}')">
+          <img class="product-img-main" src="${product.imgMain}" alt="${product.name}">
+           <img class="product-img-hover" src="${product.imgHover}" alt="${product.name} Hover">
+        </div>
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">
+          <span class="old-price">$${product.oldPrice}.00</span>
+          <span class="new-price">$${product.newPrice}.00</span>
+        </div>
+        <button class="add-cart-btn" onclick="addToCart(event, '${product.name}', ${product.newPrice}, '${product.imgMain}')">Add to Cart</button>
+      `;
+      container.appendChild(card);
+    });
+
+    function goToProduct(name, img, price, desc) {
+      const selected = { name, img, price, desc };
+      localStorage.setItem("selectedProduct", JSON.stringify(selected));
+      window.location.href = "product.html";
+    }
+
+    function addToCart(event, name, price, img) {
+      event.stopPropagation();
+      const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+      cart.push({ name, price, img });
+      localStorage.setItem("cartItems", JSON.stringify(cart));
+      alert(`${name} added to cart!`);
+    }
+  </script>
+
+</body>
+</html>

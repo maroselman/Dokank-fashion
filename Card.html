@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electronic Payment | DOKKANK</title>
+<style>
+  body {font-family: Arial, sans-serif; background:#f5f5f5; padding:20px;}
+  .container {max-width:500px; margin:50px auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 10px #0002;}
+  h2 {text-align:center; margin-bottom:20px;}
+
+  .options {display:flex; justify-content:space-between; margin-bottom:20px;}
+  .option {
+    flex: 1;
+    margin: 0 5px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .option.active {border-color:#e53935; background:#ffe5e5;}
+  .option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* الصورة تملأ المربع بالكامل */
+    display: block;
+  }
+
+  form {display:none; flex-direction:column;}
+  form.active {display:flex;}
+  label {margin-top:10px; font-weight:600;}
+  input {padding:10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;}
+  .amount {background:#eee; padding:10px; margin-top:5px; border-radius:5px; text-align:center;}
+  .upload {margin-top:10px;}
+  button {margin-top:20px; padding:12px; background:#e53935; color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:1rem;}
+  button:hover {background:#d32f2f;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Choose Payment Method</h2>
+  <div class="options">
+    <div class="option" data-method="visa">
+      <img src="./image/men/t-shirt/Visa-01.jpg" alt="Visa Logo">
+    </div>
+    <div class="option" data-method="instapay">
+      <img src="./image/men/t-shirt/intsapay.jpg" alt="InstaPay Logo">
+    </div>
+    <div class="option" data-method="wallet">
+      <img src="./image/men/t-shirt/wallet.jpg" alt="Wallet Logo">
+    </div>
+  </div>
+
+  <form id="visaForm">
+    <label>Full Name</label><input type="text" required>
+    <label>Mobile Number</label><input type="text" required>
+    <label>Card Number</label>
+    <input type="text" id="cardNumber" required maxlength="16" pattern="\d{16}" placeholder="Enter 16-digit card number">
+    <label>Amount</label><div class="amount" id="visaAmount">$0.00</div>
+    <button type="submit">Confirm Payment</button>
+  </form>
+
+  <form id="instapayForm">
+    <label>Full Name</label><input type="text" required>
+    <label>Mobile Number</label><input type="text" required>
+    <p>Transfer to this number: <strong>01210527217</strong></p>
+    <label>Upload Screenshot</label><input type="file" class="upload" required>
+    <label>Amount</label><div class="amount" id="instapayAmount">$0.00</div>
+    <button type="submit">Confirm Payment</button>
+  </form>
+
+  <form id="walletForm">
+    <label>Full Name</label><input type="text" required>
+    <label>Mobile Number</label><input type="text" required>
+    <p>Transfer to this number: <strong>01210527217</strong></p>
+    <label>Upload Screenshot</label><input type="file" class="upload" required>
+    <label>Amount</label><div class="amount" id="walletAmount">$0.00</div>
+    <button type="submit">Confirm Payment</button>
+  </form>
+</div>
+
+<script>
+  const options = document.querySelectorAll(".option");
+  const visaForm = document.getElementById("visaForm");
+  const instapayForm = document.getElementById("instapayForm");
+  const walletForm = document.getElementById("walletForm");
+
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      options.forEach(o => o.classList.remove("active"));
+      opt.classList.add("active");
+      const method = opt.dataset.method;
+      visaForm.classList.remove("active");
+      instapayForm.classList.remove("active");
+      walletForm.classList.remove("active");
+      if (method === "visa") visaForm.classList.add("active");
+      else if (method === "instapay") instapayForm.classList.add("active");
+      else walletForm.classList.add("active");
+    });
+  });
+
+  // قراءة الكارت من localStorage وحساب المجموع
+  let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+  let total = 0;
+  cart.forEach(item => {
+    let price = parseFloat(item.price.toString().replace(/[^0-9.]/g, ""));
+    if(!isNaN(price)) total += price;
+  });
+
+  document.getElementById("visaAmount").textContent = "$" + total.toFixed(2);
+  document.getElementById("instapayAmount").textContent = "$" + total.toFixed(2);
+  document.getElementById("walletAmount").textContent = "$" + total.toFixed(2);
+
+  // التحقق قبل الإرسال
+  visaForm.addEventListener("submit", function(e) {
+    const cardInput = document.getElementById("cardNumber").value.trim();
+    if(cardInput.length !== 16 || !/^\d{16}$/.test(cardInput)){
+      alert("من فضلك ادخل 16 رقم بالضبط في رقم الكارت!");
+      e.preventDefault();
+      return;
+    }
+    alert("تم تأكيد عملية الشراء بنجاح!");
+    localStorage.removeItem("cartItems");
+    window.location.href = "card.html"; // العودة لصفحة الكارت
+  });
+
+  [instapayForm, walletForm].forEach(f => {
+    f.addEventListener("submit", function(e){
+      e.preventDefault();
+      alert("تم تأكيد عملية الشراء بنجاح!");
+      localStorage.removeItem("cartItems");
+      window.location.href = "card.html";
+    });
+  });
+</script>
+
+</body>
+</html>
